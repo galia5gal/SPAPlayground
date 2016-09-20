@@ -1,0 +1,96 @@
+<!--<form *ngIf="active" (ngSubmit)="onSubmit()" [formGroup]="travelForm">-->
+<form *ngIf="active" (ngSubmit)="onSubmit()" [formGroup]="travelForm">
+<h1>{{title}}</h1>
+{{diagnostic}}<br/>
+{{formData}}<br/>
+
+<!--<div class="container">
+    <h1>Travellers Form</h1>
+    
+      <div class="form-group">
+          <label>Has Medical Conditions: </label>
+          <input type="radio" name="hasMedicalConditions" [(ngModel)]="model.hasMedicalConditions" [value]="true"> Yes
+          <input type="radio" name="hasMedicalConditions" [(ngModel)]="model.hasMedicalConditions" [value]="false"> No
+          <div *ngIf="model.hasMedicalConditions">  {{errorMessage}} </div>
+      </div>
+
+      <div class="form-group">
+          <label>Has Medical Treatment: </label>
+          <input type="radio" name="hasMedicalTreatment" [(ngModel)]="model.hasMedicalTreatment" [value]="true"> Yes
+          <input type="radio" name="hasMedicalTreatment" [(ngModel)]="model.hasMedicalTreatment" [value]="false"> No
+      </div>
+      
+      <div class="form-group">
+        <label for="productId">Product Id</label>
+        <input type="text" class="form-control"  [(ngModel)]="model.productId" id="productId" name="productId" #spy formControlName="productId">
+        <p *ngIf="travelForm.controls.productId.errors">This field is required!</p>
+        <br>TODO: remove this: {{spy.className}}
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    
+</div>-->
+<div class="container">
+    <input type="hidden" class="form-control" formControlName="travelType" [(ngModel)]="model.travelType">
+    <input type="hidden" class="form-control" formControlName="quoteId" [(ngModel)]="model.hasClaimsAndPquoteIdolicyHistory">
+    <input type="hidden" class="form-control" formControlName="affinityId" [(ngModel)]="model.affinityId">
+    <input type="hidden" class="form-control" formControlName="riskType" [(ngModel)]="model.riskType">
+    <h1>Travellers Form</h1>
+    
+      <div class="form-group" *ngIf="labelsErrors.labels['travelHasMedicalConditions']">
+          <label ><h4>{{labelsErrors.labels['travelHasMedicalConditions'].heading}}:</h4>{{labelsErrors.labels['travelHasMedicalConditions'].text}}</label>
+          <input type="radio" formControlName="hasMedicalConditions"  [value]="true" [(ngModel)]="model.hasMedicalConditions"> Yes
+          <input type="radio" formControlName="hasMedicalConditions"  [value]="false" [(ngModel)]="model.hasMedicalConditions"> No
+          <p *ngIf="travelForm.controls.hasMedicalConditions.value==true">{{labelsErrors.errors['travelHasMedicalConditions']}}</p>
+      </div>
+
+      <div class="form-group" *ngIf="labelsErrors.labels['travelHasMedicalTreatment']">
+          <label><h4>{{labelsErrors.labels['travelHasMedicalTreatment'].heading}}:</h4>{{labelsErrors.labels['travelHasMedicalTreatment'].text}}</label>
+          <input type="radio" formControlName="hasMedicalTreatment" [value]="true" [(ngModel)]="model.hasMedicalTreatment"> Yes
+          <input type="radio" formControlName="hasMedicalTreatment" [value]="false" [(ngModel)]="model.hasMedicalTreatment"> No
+          <p *ngIf="travelForm.controls.hasMedicalTreatment.value==true">{{labelsErrors.errors['travelHasMedicalTreatment']}}</p>
+      </div>
+      <div class="form-group" *ngIf="labelsErrors.labels['travelHasTravelCancellation']">
+          <label><h4>{{labelsErrors.labels['travelHasTravelCancellation'].heading}}:</h4>{{labelsErrors.labels['travelHasTravelCancellation'].text}}</label>
+          <input type="radio" formControlName="travelCancellationNeeded" [value]="true" [(ngModel)]="model.travelCancellationNeeded"> Yes
+          <input type="radio" formControlName="travelCancellationNeeded" [value]="false" [(ngModel)]="model.travelCancellationNeeded"> No
+          <p *ngIf="travelForm.controls.travelCancellationNeeded.value==true">{{labelsErrors.errors['travelCancellationNeeded']}}</p>
+      </div>
+      <div class="form-group" *ngIf="labelsErrors.labels['travelHasTravelClaimsAndPolicyHistoryHeading']">
+          <label><h4>{{labelsErrors.labels['travelHasTravelClaimsAndPolicyHistoryHeading'].heading}}:</h4>{{labelsErrors.labels['travelHasTravelClaimsAndPolicyHistoryHeading'].text}}</label>
+          <input type="radio" formControlName="hasClaimsAndPolicyHistory" [value]="true" [(ngModel)]="model.hasClaimsAndPolicyHistory"> Yes
+          <input type="radio" formControlName="hasClaimsAndPolicyHistory" [value]="false" [(ngModel)]="model.hasClaimsAndPolicyHistory"> No
+          <p *ngIf="travelForm.controls.hasClaimsAndPolicyHistory.value==true">{{labelsErrors.errors['travelHasClaimsAndPolicyHistory']}}</p>
+      </div> 
+      <hr/>
+      <div class="form-group" [hidden]="model.riskType=='Annual'&&model.travelType=='S'">
+        <label>Number of Adults under 75: </label>
+            <select formControlName="adultsUnder75" [(ngModel)]="model.adultsUnder75">
+                <option value="1" [selected] = "model.riskType=='Annual'&&model.travelType=='S'">1</option>                
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>                                    
+            </select>
+       </div>   
+       <div class="form-group" [hidden]="model.riskType=='Annual'&&model.travelType=='S'">
+            <label>Number of Children under 16: </label>
+            <select formControlName="childrenUnder16" [(ngModel)]="model.childrenUnder16">
+                <option value="0" [selected] = "model.riskType=='Annual'&&model.travelType=='S'">0</option> 
+                <option value="1">1</option>                
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>                                    
+            </select>
+        </div>                                                                                                                   
+      
+      <div class="form-group" formGroupName="quoteInfo">
+        <label for="productId">Product Id</label>
+        <input type="text" class="form-control" #spy formControlName="productCode" [(ngModel)]="model.productCode">
+        <p *ngIf="travelForm.controls.quoteInfo.controls.productCode.errors">This field is required!</p>
+        <br>TODO: remove this: {{spy.className}}
+      </div>
+      <button type="submit" class="btn btn-default" [disabled]="!travelForm.valid">Submit</button>
+    
+</div>
+</form>

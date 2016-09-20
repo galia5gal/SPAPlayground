@@ -1,0 +1,20 @@
+<header>
+  <nav>
+    <!--<a [routerLink]="['Products/Individual-and-Family/Travel/Quote/Travellers']">Travellers</a>
+    <a [routerLink]="['Products/Individual-and-Family/Travel/Quote/Coverage']">Coverage</a>-->
+    <li *ngFor="let navItem of navItems">
+
+        <a [routerLink]="[navItem.url, params['quoteId']]" *ngIf="!navItem.disabled">{{navItem.displayName}}</a>
+        <span *ngIf="navItem.disabled">{{navItem.displayName}}</span>
+    </li>
+  </nav>
+</header>
+<main>
+
+  <!-- Images (and assets) are parsed and loaded from within the public directory -->
+  <!--<img src="/img/angular.png">-->
+  <router-outlet></router-outlet>
+</main>
+<footer>
+  <a [href]="url">Webpack Angular 2 Starter</a>
+</footer>
